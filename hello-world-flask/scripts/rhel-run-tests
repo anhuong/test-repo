@@ -1,0 +1,16 @@
+#!/bin/bash
+
+TAG="rhel-test"
+CONTAINER_NAME="tron/hello-world-flask:${TAG}"
+DIR="$( dirname "$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )")"
+
+RHEL_FILE='Dockerfile.rhel-atomic'
+
+docker build -f "$RHEL_FILE" --tag="${CONTAINER_NAME}" "${DIR}"
+
+docker run \
+  --interactive \
+  --tty \
+  --rm \
+  --volume "${DIR}":/src \
+  "${CONTAINER_NAME}"

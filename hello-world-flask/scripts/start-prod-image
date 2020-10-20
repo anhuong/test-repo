@@ -1,0 +1,13 @@
+#!/bin/bash
+
+CONTAINER_NAME="tron/hello-world-flask:latest"
+DIR="$( dirname "$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )")"
+
+docker build --target=final --tag="${CONTAINER_NAME}" "${DIR}"
+
+docker run \
+  --interactive \
+  --tty \
+  --rm \
+  --publish 5000:5000 \
+  "${CONTAINER_NAME}"

@@ -1,0 +1,37 @@
+#!/bin/bash
+
+TAG="test"
+DIR="$( dirname "$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )")"
+typeset -a docker_args=(
+  "--interactive"
+  "--tty"
+  "--rm"
+  "--volume=${DIR}:/src"
+)
+IMAGE_NAME="tron/hello-world-flask"
+
+# run of the regular python:alpine Docker image
+# CONTAINER_NAME="${IMAGE_NAME}:${TAG}"
+CONTAINER_NAME="hello-world-flask:4-8-19"
+docker build --target="${TAG}" --tag="${CONTAINER_NAME}" "${DIR}"
+docker run "${docker_args[@]}" "${CONTAINER_NAME}"
+
+# # run of the centos Docker image
+# CENTOS_CONTAINER_NAME="${IMAGE_NAME}:centos-${TAG}"
+# docker build --target="${TAG}" --tag="${CENTOS_CONTAINER_NAME}" "${DIR}" -f Dockerfile.centos
+# docker run "${docker_args[@]}" "${CENTOS_CONTAINER_NAME}"
+#
+# # run of the power Docker image
+# POWER_CONTAINER_NAME="${IMAGE_NAME}:power-${TAG}"
+# docker build --target="${TAG}" --tag="${POWER_CONTAINER_NAME}" "${DIR}" -f Dockerfile.power
+# docker run "${docker_args[@]}" "${POWER_CONTAINER_NAME}"
+#
+# # run of the ubi rhel Docker image
+# RHEL_UBI_CONTAINER_NAME="${IMAGE_NAME}:rhel-ubi-${TAG}"
+# docker build --target="${TAG}" --tag="${RHEL_UBI_CONTAINER_NAME}" "${DIR}" -f Dockerfile.rhel-ubi
+# docker run "${docker_args[@]}" "${RHEL_UBI_CONTAINER_NAME}"
+#
+# # run of the ubi rhel Docker image
+# RHEL_UBI_MINIMAL_CONTAINER_NAME="${IMAGE_NAME}:rhel-ubi-minimal-${TAG}"
+# docker build --target="${TAG}" --tag="${RHEL_UBI_MINIMAL_CONTAINER_NAME}" "${DIR}" -f Dockerfile.rhel-ubi-minimal
+# docker run "${docker_args[@]}" "${RHEL_UBI_MINIMAL_CONTAINER_NAME}"

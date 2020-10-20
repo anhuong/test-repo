@@ -1,0 +1,18 @@
+#!/bin/bash
+
+set -x
+
+TAG="localdev"
+CONTAINER_NAME="tron/hello-world-flask:${TAG}"
+DIR="$( dirname "$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )")"
+
+docker build --target="${TAG}" --tag="${CONTAINER_NAME}" "${DIR}"
+
+docker run \
+  --interactive \
+  --tty \
+  --rm \
+  --publish 5000:5000 \
+  --workdir /src \
+  --volume "${DIR}":/src \
+  "${CONTAINER_NAME}"
